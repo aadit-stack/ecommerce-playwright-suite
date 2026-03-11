@@ -16,6 +16,7 @@ export default defineConfig({
     video: 'retain-on-failure',
     trace: 'retain-on-failure',
     actionTimeout: 10_000,
+    navigationTimeout: 15_000,
   },
   timeout: 30_000,
   projects: [

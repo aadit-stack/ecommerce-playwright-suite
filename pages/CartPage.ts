@@ -6,6 +6,7 @@ export class CartPage {
   readonly cartItemNames: Locator;
   readonly cartItemPrices: Locator;
   readonly cartItemQuantities: Locator;
+  readonly cartContentsContainer: Locator;
   readonly checkoutButton: Locator;
   readonly continueShoppingButton: Locator;
   readonly title: Locator;
@@ -16,6 +17,7 @@ export class CartPage {
     this.cartItemNames = page.locator('[data-test="inventory-item-name"]');
     this.cartItemPrices = page.locator('[data-test="inventory-item-price"]');
     this.cartItemQuantities = page.locator('[data-test="item-quantity"]');
+    this.cartContentsContainer = page.locator('[data-test="cart-contents-container"]');
     this.checkoutButton = page.locator('[data-test="checkout"]');
     this.continueShoppingButton = page.locator('[data-test="continue-shopping"]');
     this.title = page.locator('[data-test="title"]');

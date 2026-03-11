@@ -73,6 +73,7 @@ export class ProductsPage {
 
   async openMenu() {
     await this.menuButton.click();
+    await this.page.locator('.bm-menu-wrap').waitFor({ state: 'visible' });
     await this.logoutLink.waitFor({ state: 'visible' });
   }
 

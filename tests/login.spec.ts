@@ -16,6 +16,7 @@ test.describe('Login Page', () => {
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page);
     await loginPage.goto();
+    await expect(loginPage.loginButton).toBeVisible();
   });
 
   // ── Positive Tests ───────────────────────────
@@ -39,44 +40,37 @@ test.describe('Login Page', () => {
 
   test('should show error for locked_out_user', async () => {
     await loginPage.login(USERS.LOCKED_OUT, PASSWORD);
-    const error = await loginPage.getErrorMessage();
-    expect(error).toContain('locked out');
+    await expect(loginPage.errorMessage).toContainText('locked out');
   });
 
   test('should show error when username is empty', async () => {
     await loginPage.login('', PASSWORD);
-    const error = await loginPage.getErrorMessage();
-    expect(error).toBe(LOGIN_ERRORS.USERNAME_REQUIRED);
+    await expect(loginPage.errorMessage).toContainText(LOGIN_ERRORS.USERNAME_REQUIRED);
   });
 
   test('should show error when password is empty', async () => {
     await loginPage.login(USERS.STANDARD, '');
-    const error = await loginPage.getErrorMessage();
-    expect(error).toBe(LOGIN_ERRORS.PASSWORD_REQUIRED);
+    await expect(loginPage.errorMessage).toContainText(LOGIN_ERRORS.PASSWORD_REQUIRED);
   });
 
   test('should show username required when both fields empty', async () => {
     await loginPage.login('', '');
-    const error = await loginPage.getErrorMessage();
-    expect(error).toBe(LOGIN_ERRORS.USERNAME_REQUIRED);
+    await expect(loginPage.errorMessage).toContainText(LOGIN_ERRORS.USERNAME_REQUIRED);
   });
 
   test('should show error for invalid username', async () => {
     await loginPage.login(INVALID_USERNAME, PASSWORD);
-    const error = await loginPage.getErrorMessage();
-    expect(error).toBe(LOGIN_ERRORS.CREDENTIALS_MISMATCH);
+    await expect(loginPage.errorMessage).toContainText(LOGIN_ERRORS.CREDENTIALS_MISMATCH);
   });
 
   test('should show error for invalid password', async () => {
     await loginPage.login(USERS.STANDARD, INVALID_PASSWORD);
-    const error = await loginPage.getErrorMessage();
-    expect(error).toBe(LOGIN_ERRORS.CREDENTIALS_MISMATCH);
+    await expect(loginPage.errorMessage).toContainText(LOGIN_ERRORS.CREDENTIALS_MISMATCH);
   });
 
   test('should show error for both invalid credentials', async () => {
     await loginPage.login(INVALID_USERNAME, INVALID_PASSWORD);
-    const error = await loginPage.getErrorMessage();
-    expect(error).toBe(LOGIN_ERRORS.CREDENTIALS_MISMATCH);
+    await expect(loginPage.errorMessage).toContainText(LOGIN_ERRORS.CREDENTIALS_MISMATCH);
   });
 
   // ── UI / Accessibility Tests ─────────────────
@@ -90,6 +84,7 @@ test.describe('Login Page', () => {
   });
 
   test('should have correct username placeholder', async () => {
+    await expect(loginPage.usernameInput).toBeVisible();
     await expect(loginPage.usernameInput).toHaveAttribute('placeholder', 'Username');
   });
 
@@ -99,6 +94,6 @@ test.describe('Login Page', () => {
 
   test('should display error message container when login fails', async () => {
     await loginPage.login('', '');
-    expect(await loginPage.isErrorVisible()).toBe(true);
+    await expect(loginPage.errorMessage).toBeVisible();
   });
 });

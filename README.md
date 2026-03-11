@@ -1,156 +1,78 @@
-# 🧪 SauceDemo Playwright Test Automation
+# E-Commerce Test Automation Suite
 
-[![Playwright Tests](https://github.com/<your-username>/saucedemo-playwright/actions/workflows/playwright.yml/badge.svg)](https://github.com/<your-username>/saucedemo-playwright/actions/workflows/playwright.yml)
+![CI Status](paste your Actions badge here)
 
-End-to-end test automation for [SauceDemo](https://www.saucedemo.com) — a fake e-commerce site built for automation practice — using **Playwright** with **TypeScript**, the **Page Object Model** pattern, and **Allure** reporting.
-
----
-
-## 📊 Allure Report
-
-![Allure Report](docs/allure-report-screenshot.png)
+A professional end-to-end test automation framework built with Playwright and 
+TypeScript, covering critical e-commerce user flows with cross-browser execution, 
+CI/CD integration, and Allure reporting.
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
-| Tool | Purpose |
-|------|---------|
-| [Playwright](https://playwright.dev) | Browser automation & test runner |
-| TypeScript | Type-safe test code |
-| Page Object Model | Maintainable, reusable page abstractions |
-| [Allure](https://allurereport.org) | Rich HTML test reports |
-| GitHub Actions | CI/CD pipeline |
+- **Playwright** — test automation framework
+- **TypeScript** — language
+- **GitHub Actions** — CI/CD pipeline
+- **Allure** — test reporting
+- **Node.js** — runtime
 
 ---
 
-## 📁 Project Structure
+## What's Being Tested
 
+- Login (valid credentials, invalid credentials, locked user)
+- Product listing and sorting
+- Add to cart / remove from cart
+- Full checkout flow end to end
+- Cross-browser: Chromium, Firefox, WebKit
+
+---
+
+## Project Structure
 ```
-saucedemo-playwright/
-├── tests/
-│   ├── login.spec.ts          # 15 login tests
-│   ├── products.spec.ts       # 19 products page tests
-│   ├── cart.spec.ts            # 13 cart tests
-│   └── checkout.spec.ts       # 15 checkout flow tests
-├── pages/
-│   ├── LoginPage.ts            # Login page object
-│   ├── ProductsPage.ts        # Products/inventory page object
-│   ├── CartPage.ts             # Cart page object
-│   └── CheckoutPage.ts        # Checkout page object (all 3 steps)
-├── utils/
-│   └── testData.ts             # Centralized test data & constants
-├── .github/
-│   └── workflows/
-│       └── playwright.yml      # CI pipeline
-├── playwright.config.ts        # Playwright configuration
-├── package.json
-└── README.md
+├── tests/          # test spec files
+├── pages/          # Page Object Model classes
+├── utils/          # test data and helpers
+├── .github/        # GitHub Actions workflow
+└── playwright.config.ts
 ```
 
 ---
 
-## 🚀 Getting Started
+## How to Run Locally
 
-### Prerequisites
+Clone the repo:
+git clone https://github.com/aadit-stack/ecommerce-playwright-suite.git
 
-- [Node.js](https://nodejs.org) v18 or later
-- npm
-
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/<your-username>/saucedemo-playwright.git
-cd saucedemo-playwright
-
-# Install dependencies
+Install dependencies:
 npm install
 
-# Install Playwright browsers
-npx playwright install --with-deps
-```
+Install browsers:
+npx playwright install
 
-### Running Tests
+Run all tests:
+npx playwright test
 
-```bash
-# Run all tests across Chromium, Firefox, and WebKit
-npm test
-
-# Run tests in a specific browser
-npm run test:chromium
-npm run test:firefox
-npm run test:webkit
-
-# Run tests in headed mode (see the browser)
-npm run test:headed
-
-# Run a specific test file
-npx playwright test tests/login.spec.ts
-
-# Run with Playwright UI mode
+Run in UI mode (visual, great for debugging):
 npx playwright test --ui
-```
 
-### Generating Allure Reports
+Run on a specific browser only:
+npx playwright test --project=chromium
 
-```bash
-# Generate and open the Allure report
-npm run allure:report
-
-# Or generate only
-npm run allure:generate
-
-# Then open separately
-npm run allure:open
-```
+Generate Allure report:
+npx allure generate allure-results --clean -o allure-report
+npx allure open allure-report
 
 ---
 
-## ✅ Test Coverage
+## CI/CD Pipeline
 
-| Test Suite | Tests | Coverage |
-|-----------|-------|----------|
-| **Login** | 15 | Valid/invalid login, error messages, UI elements |
-| **Products** | 19 | Display, sorting (4 options), add/remove cart, navigation |
-| **Cart** | 13 | Add/remove items, prices, persistence, navigation |
-| **Checkout** | 15 | E2E flow, form validation, overview totals, confirmation |
-| **Total** | **62** | |
+Tests run automatically on every push via GitHub Actions across 
+Chromium, Firefox, and WebKit in parallel. Allure report is 
+published to GitHub Pages. Slack notification fires on failure.
 
 ---
 
-## ⚙️ Configuration
+## Sample Report
 
-Key settings in `playwright.config.ts`:
-
-| Setting | Value |
-|---------|-------|
-| Base URL | `https://www.saucedemo.com` |
-| Retries | 1 (local) / 2 (CI) |
-| Screenshots | On failure only |
-| Video | Retained on failure |
-| Trace | Retained on failure |
-| Timeout | 30 seconds |
-| Action Timeout | 10 seconds |
-| Browsers | Chromium, Firefox, WebKit |
-
----
-
-## 🔄 CI/CD
-
-Tests run automatically via GitHub Actions on every:
-- **Push** to `main`
-- **Pull request** to `main`
-
-The pipeline:
-1. Checks out code
-2. Installs Node.js 18 + dependencies
-3. Installs Playwright browsers
-4. Runs all tests
-5. Generates & uploads Allure report as artifact
-
----
-
-## 📝 License
-
-ISC
+Allure report here)

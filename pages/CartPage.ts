@@ -34,12 +34,8 @@ export class CartPage {
     return this.cartItems.count();
   }
 
-  async removeItem(productName: string) {
-    const kebab = productName
-      .toLowerCase()
-      .replace(/[()]/g, '')
-      .replace(/\s+/g, '-');
-    await this.page.locator(`[data-test="remove-${kebab}"]`).click();
+  async removeItem(slug: string) {
+    await this.page.locator(`[data-test="remove-${slug}"]`).click();
   }
 
   async checkout() {

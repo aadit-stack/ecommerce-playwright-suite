@@ -32,16 +32,16 @@ test.describe('Cart Page', () => {
   // ── Adding Items ─────────────────────────────
 
   test('should show added item in cart', async () => {
-    await productsPage.addToCart(PRODUCTS.BACKPACK.name);
+    await productsPage.addToCart(PRODUCTS.BACKPACK.slug);
     await productsPage.goToCart();
     const items = await cartPage.getCartItemNames();
     expect(items).toContain(PRODUCTS.BACKPACK.name);
   });
 
   test('should show multiple added items in cart', async () => {
-    await productsPage.addToCart(PRODUCTS.BACKPACK.name);
-    await productsPage.addToCart(PRODUCTS.BIKE_LIGHT.name);
-    await productsPage.addToCart(PRODUCTS.BOLT_TSHIRT.name);
+    await productsPage.addToCart(PRODUCTS.BACKPACK.slug);
+    await productsPage.addToCart(PRODUCTS.BIKE_LIGHT.slug);
+    await productsPage.addToCart(PRODUCTS.BOLT_TSHIRT.slug);
     await productsPage.goToCart();
     const items = await cartPage.getCartItemNames();
     expect(items).toContain(PRODUCTS.BACKPACK.name);
@@ -51,8 +51,8 @@ test.describe('Cart Page', () => {
   });
 
   test('should display correct prices in cart', async () => {
-    await productsPage.addToCart(PRODUCTS.BACKPACK.name);
-    await productsPage.addToCart(PRODUCTS.ONESIE.name);
+    await productsPage.addToCart(PRODUCTS.BACKPACK.slug);
+    await productsPage.addToCart(PRODUCTS.ONESIE.slug);
     await productsPage.goToCart();
     const prices = await cartPage.getCartItemPrices();
     expect(prices).toContain(PRODUCTS.BACKPACK.price);
@@ -60,7 +60,7 @@ test.describe('Cart Page', () => {
   });
 
   test('should display quantity of 1 for each item', async () => {
-    await productsPage.addToCart(PRODUCTS.BACKPACK.name);
+    await productsPage.addToCart(PRODUCTS.BACKPACK.slug);
     await productsPage.goToCart();
     const qty = await cartPage.cartItemQuantities.first().textContent();
     expect(qty?.trim()).toBe('1');
@@ -69,27 +69,27 @@ test.describe('Cart Page', () => {
   // ── Removing Items ───────────────────────────
 
   test('should remove item from cart', async () => {
-    await productsPage.addToCart(PRODUCTS.BACKPACK.name);
+    await productsPage.addToCart(PRODUCTS.BACKPACK.slug);
     await productsPage.goToCart();
-    await cartPage.removeItem(PRODUCTS.BACKPACK.name);
+    await cartPage.removeItem(PRODUCTS.BACKPACK.slug);
     expect(await cartPage.isCartEmpty()).toBe(true);
   });
 
   test('should remove all items from cart', async () => {
-    await productsPage.addToCart(PRODUCTS.BACKPACK.name);
-    await productsPage.addToCart(PRODUCTS.BIKE_LIGHT.name);
+    await productsPage.addToCart(PRODUCTS.BACKPACK.slug);
+    await productsPage.addToCart(PRODUCTS.BIKE_LIGHT.slug);
     await productsPage.goToCart();
-    await cartPage.removeItem(PRODUCTS.BACKPACK.name);
-    await cartPage.removeItem(PRODUCTS.BIKE_LIGHT.name);
+    await cartPage.removeItem(PRODUCTS.BACKPACK.slug);
+    await cartPage.removeItem(PRODUCTS.BIKE_LIGHT.slug);
     expect(await cartPage.isCartEmpty()).toBe(true);
   });
 
   test('should keep remaining items after removing one', async () => {
-    await productsPage.addToCart(PRODUCTS.BACKPACK.name);
-    await productsPage.addToCart(PRODUCTS.BIKE_LIGHT.name);
-    await productsPage.addToCart(PRODUCTS.ONESIE.name);
+    await productsPage.addToCart(PRODUCTS.BACKPACK.slug);
+    await productsPage.addToCart(PRODUCTS.BIKE_LIGHT.slug);
+    await productsPage.addToCart(PRODUCTS.ONESIE.slug);
     await productsPage.goToCart();
-    await cartPage.removeItem(PRODUCTS.BIKE_LIGHT.name);
+    await cartPage.removeItem(PRODUCTS.BIKE_LIGHT.slug);
     const items = await cartPage.getCartItemNames();
     expect(items).toHaveLength(2);
     expect(items).toContain(PRODUCTS.BACKPACK.name);
@@ -106,7 +106,7 @@ test.describe('Cart Page', () => {
   });
 
   test('should navigate to checkout step one', async ({ page }) => {
-    await productsPage.addToCart(PRODUCTS.BACKPACK.name);
+    await productsPage.addToCart(PRODUCTS.BACKPACK.slug);
     await productsPage.goToCart();
     await cartPage.checkout();
     await expect(page).toHaveURL(URLS.CHECKOUT_STEP_ONE);
@@ -115,8 +115,8 @@ test.describe('Cart Page', () => {
   // ── Persistence ──────────────────────────────
 
   test('should persist cart items after navigating away and back', async () => {
-    await productsPage.addToCart(PRODUCTS.FLEECE_JACKET.name);
-    await productsPage.addToCart(PRODUCTS.BOLT_TSHIRT.name);
+    await productsPage.addToCart(PRODUCTS.FLEECE_JACKET.slug);
+    await productsPage.addToCart(PRODUCTS.BOLT_TSHIRT.slug);
     // Navigate to cart, then back to products, then to cart again
     await productsPage.goToCart();
     await cartPage.continueShopping();
@@ -127,8 +127,8 @@ test.describe('Cart Page', () => {
   });
 
   test('should update cart badge to match cart item count', async () => {
-    await productsPage.addToCart(PRODUCTS.BACKPACK.name);
-    await productsPage.addToCart(PRODUCTS.BIKE_LIGHT.name);
+    await productsPage.addToCart(PRODUCTS.BACKPACK.slug);
+    await productsPage.addToCart(PRODUCTS.BIKE_LIGHT.slug);
     const badge = await productsPage.getCartBadgeCount();
     await productsPage.goToCart();
     const cartCount = await cartPage.getCartItemCount();

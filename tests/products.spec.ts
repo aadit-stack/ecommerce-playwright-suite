@@ -50,13 +50,10 @@ test.describe('Products Page', () => {
   });
 
   test('should display add-to-cart button for every product', async () => {
-    for (const product of ALL_PRODUCT_NAMES) {
-      const kebab = product
-        .toLowerCase()
-        .replace(/[()]/g, '')
-        .replace(/\s+/g, '-');
+    const allProducts = Object.values(PRODUCTS);
+    for (const product of allProducts) {
       await expect(
-        productsPage.page.locator(`[data-test="add-to-cart-${kebab}"]`)
+        productsPage.page.locator(`[data-test="add-to-cart-${product.slug}"]`)
       ).toBeVisible();
     }
   });
@@ -98,39 +95,39 @@ test.describe('Products Page', () => {
   // ── Add / Remove from Cart ───────────────────
 
   test('should show cart badge with 1 after adding one item', async () => {
-    await productsPage.addToCart(PRODUCTS.BACKPACK.name);
+    await productsPage.addToCart(PRODUCTS.BACKPACK.slug);
     const badge = await productsPage.getCartBadgeCount();
     expect(badge).toBe(1);
   });
 
   test('should show cart badge with correct count for multiple items', async () => {
-    await productsPage.addToCart(PRODUCTS.BACKPACK.name);
-    await productsPage.addToCart(PRODUCTS.BIKE_LIGHT.name);
-    await productsPage.addToCart(PRODUCTS.ONESIE.name);
+    await productsPage.addToCart(PRODUCTS.BACKPACK.slug);
+    await productsPage.addToCart(PRODUCTS.BIKE_LIGHT.slug);
+    await productsPage.addToCart(PRODUCTS.ONESIE.slug);
     const badge = await productsPage.getCartBadgeCount();
     expect(badge).toBe(3);
   });
 
   test('should change button to Remove after adding item', async () => {
-    await productsPage.addToCart(PRODUCTS.BACKPACK.name);
+    await productsPage.addToCart(PRODUCTS.BACKPACK.slug);
     const removeBtn = productsPage.page.locator(
-      '[data-test="remove-sauce-labs-backpack"]'
+      `[data-test="remove-${PRODUCTS.BACKPACK.slug}"]`
     );
     await expect(removeBtn).toBeVisible();
   });
 
   test('should change button back to Add to cart after removing', async () => {
-    await productsPage.addToCart(PRODUCTS.BACKPACK.name);
-    await productsPage.removeFromCart(PRODUCTS.BACKPACK.name);
+    await productsPage.addToCart(PRODUCTS.BACKPACK.slug);
+    await productsPage.removeFromCart(PRODUCTS.BACKPACK.slug);
     const addBtn = productsPage.page.locator(
-      '[data-test="add-to-cart-sauce-labs-backpack"]'
+      `[data-test="add-to-cart-${PRODUCTS.BACKPACK.slug}"]`
     );
     await expect(addBtn).toBeVisible();
   });
 
   test('should hide cart badge when all items removed', async () => {
-    await productsPage.addToCart(PRODUCTS.BACKPACK.name);
-    await productsPage.removeFromCart(PRODUCTS.BACKPACK.name);
+    await productsPage.addToCart(PRODUCTS.BACKPACK.slug);
+    await productsPage.removeFromCart(PRODUCTS.BACKPACK.slug);
     expect(await productsPage.isCartBadgeVisible()).toBe(false);
   });
 

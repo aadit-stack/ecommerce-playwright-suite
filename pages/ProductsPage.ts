@@ -50,21 +50,12 @@ export class ProductsPage {
     await this.sortDropdown.selectOption(option);
   }
 
-  private toKebabCase(name: string): string {
-    return name
-      .toLowerCase()
-      .replace(/[()]/g, '')
-      .replace(/\s+/g, '-');
+  async addToCart(slug: string) {
+    await this.page.locator(`[data-test="add-to-cart-${slug}"]`).click();
   }
 
-  async addToCart(productName: string) {
-    const kebab = this.toKebabCase(productName);
-    await this.page.locator(`[data-test="add-to-cart-${kebab}"]`).click();
-  }
-
-  async removeFromCart(productName: string) {
-    const kebab = this.toKebabCase(productName);
-    await this.page.locator(`[data-test="remove-${kebab}"]`).click();
+  async removeFromCart(slug: string) {
+    await this.page.locator(`[data-test="remove-${slug}"]`).click();
   }
 
   async getCartBadgeCount(): Promise<number> {

@@ -30,12 +30,12 @@ export const INVALID_USERNAME = 'invalid_user';
 // Products
 // ──────────────────────────────────────────────
 export const PRODUCTS = {
-  BACKPACK: { name: 'Sauce Labs Backpack', price: 29.99 },
-  BIKE_LIGHT: { name: 'Sauce Labs Bike Light', price: 9.99 },
-  BOLT_TSHIRT: { name: 'Sauce Labs Bolt T-Shirt', price: 15.99 },
-  FLEECE_JACKET: { name: 'Sauce Labs Fleece Jacket', price: 49.99 },
-  ONESIE: { name: 'Sauce Labs Onesie', price: 7.99 },
-  TSHIRT_RED: { name: 'Test.allTheThings() T-Shirt (Red)', price: 15.99 },
+  BACKPACK: { name: 'Sauce Labs Backpack', price: 29.99, slug: 'sauce-labs-backpack' },
+  BIKE_LIGHT: { name: 'Sauce Labs Bike Light', price: 9.99, slug: 'sauce-labs-bike-light' },
+  BOLT_TSHIRT: { name: 'Sauce Labs Bolt T-Shirt', price: 15.99, slug: 'sauce-labs-bolt-t-shirt' },
+  FLEECE_JACKET: { name: 'Sauce Labs Fleece Jacket', price: 49.99, slug: 'sauce-labs-fleece-jacket' },
+  ONESIE: { name: 'Sauce Labs Onesie', price: 7.99, slug: 'sauce-labs-onesie' },
+  TSHIRT_RED: { name: 'Test.allTheThings() T-Shirt (Red)', price: 15.99, slug: 'test.allthethings()-t-shirt-(red)' },
 } as const;
 
 export const ALL_PRODUCT_NAMES = Object.values(PRODUCTS).map((p) => p.name);

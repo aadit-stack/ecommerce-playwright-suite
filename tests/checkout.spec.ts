@@ -30,9 +30,9 @@ test.describe('Checkout Flow', () => {
   });
 
   /** Helper — add item, go to cart, click checkout */
-  async function navigateToCheckout(items: string[] = [PRODUCTS.BACKPACK.name]) {
-    for (const item of items) {
-      await productsPage.addToCart(item);
+  async function navigateToCheckout(slugs: string[] = [PRODUCTS.BACKPACK.slug]) {
+    for (const slug of slugs) {
+      await productsPage.addToCart(slug);
     }
     await productsPage.goToCart();
     await cartPage.checkout();
@@ -56,9 +56,9 @@ test.describe('Checkout Flow', () => {
 
   test('should complete checkout with multiple items', async ({ page }) => {
     await navigateToCheckout([
-      PRODUCTS.BACKPACK.name,
-      PRODUCTS.BIKE_LIGHT.name,
-      PRODUCTS.FLEECE_JACKET.name,
+      PRODUCTS.BACKPACK.slug,
+      PRODUCTS.BIKE_LIGHT.slug,
+      PRODUCTS.FLEECE_JACKET.slug,
     ]);
     await checkoutPage.fillInformation(
       CHECKOUT_INFO.FIRST_NAME,
@@ -123,7 +123,7 @@ test.describe('Checkout Flow', () => {
   // ── Overview Page (Step Two) ─────────────────
 
   test('should display correct items on overview page', async () => {
-    await navigateToCheckout([PRODUCTS.BACKPACK.name, PRODUCTS.ONESIE.name]);
+    await navigateToCheckout([PRODUCTS.BACKPACK.slug, PRODUCTS.ONESIE.slug]);
     await checkoutPage.fillInformation(
       CHECKOUT_INFO.FIRST_NAME,
       CHECKOUT_INFO.LAST_NAME,
@@ -135,7 +135,7 @@ test.describe('Checkout Flow', () => {
   });
 
   test('should display subtotal on overview', async () => {
-    await navigateToCheckout([PRODUCTS.BACKPACK.name]);
+    await navigateToCheckout([PRODUCTS.BACKPACK.slug]);
     await checkoutPage.fillInformation(
       CHECKOUT_INFO.FIRST_NAME,
       CHECKOUT_INFO.LAST_NAME,
@@ -146,7 +146,7 @@ test.describe('Checkout Flow', () => {
   });
 
   test('should display tax on overview', async () => {
-    await navigateToCheckout([PRODUCTS.BACKPACK.name]);
+    await navigateToCheckout([PRODUCTS.BACKPACK.slug]);
     await checkoutPage.fillInformation(
       CHECKOUT_INFO.FIRST_NAME,
       CHECKOUT_INFO.LAST_NAME,
@@ -157,7 +157,7 @@ test.describe('Checkout Flow', () => {
   });
 
   test('should have total equal to subtotal plus tax', async () => {
-    await navigateToCheckout([PRODUCTS.BACKPACK.name, PRODUCTS.BIKE_LIGHT.name]);
+    await navigateToCheckout([PRODUCTS.BACKPACK.slug, PRODUCTS.BIKE_LIGHT.slug]);
     await checkoutPage.fillInformation(
       CHECKOUT_INFO.FIRST_NAME,
       CHECKOUT_INFO.LAST_NAME,
